@@ -25,11 +25,11 @@ An attacker logged in to WordPress, **uploaded a fake plugin called "Zedd Plugin
 
 The plugins list showed an unknown **Zedd Plugins** entry (inactive, but its files were live on disk).
 
-![Unknown plugin in WordPress admin](images/02-fake-plugin-in-wp-admin.jpg)
+![Unknown plugin in WordPress admin](\Screenshot 2026-04-17 233254.jpg)
 
 In the file manager, the plugin folder contained a harmless-looking main file and a hidden folder `m/`, created minutes earlier.
 
-![zeddsiti plugin folder with hidden m folder](images/01-fake-plugin-folder.jpg)
+
 
 ### 2. The real payload was in the hidden folder
 
@@ -46,17 +46,17 @@ Because the plugin was inactive, it did not matter: the files can be called dire
 
 The same loader file (`CDX7.php`) was found in the web root of **five sites** on the same account, plus a copy inside the fake plugin. The attacker reached other sites through the shared hosting account, not through separate WordPress logins.
 
-![Same backdoor file found in 5 sites (other domains blurred)](images/05-same-backdoor-in-5-sites.jpg)
+
 
 Fresh unknown files also appeared in the site root, next to normal files.
 
-![Dropped files in public_html](images/03-dropped-files-public-html.jpg)
+
 
 ### 4. wp-config.php was tampered with
 
 The attacker added a "Secured by..." comment and set `DISALLOW_FILE_EDIT` and `DISALLOW_FILE_MODS` to `true`. This blocks the owner from installing, updating or deleting plugins from the dashboard, which **protects the attacker's plugin from being removed**. (Database details in this file are hidden in the screenshot.)
 
-![Tampered wp-config.php header](images/04-wp-config-tampered.jpg)
+
 
 ### 5. The access log shows the exact attack sequence
 
@@ -67,7 +67,7 @@ One IP (Indonesia) shows this order of events:
 3. Posts to `update.php?action=upload-plugin` (plugin upload)
 4. Hours later, direct requests and POSTs to files inside `/plugins/zeddsiti/m/`
 
-![Access log with attack sequence](images/06-access-log-attack-sequence.jpg)
+
 
 ---
 
